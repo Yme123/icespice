@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Absolute Worst Website Ever 2.0</title>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            overflow: hidden;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+            transform: rotate(0deg) scale(1);
+            transition: transform 0.1s;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .useless-wrapper {
+            padding: 20px;
+            margin: 20px;
+            border: 15px dashed lime;
+            display: inline-block;
+            box-shadow: 15px 15px 150px cyan;
+        }
+        .actual-image {
+            width: 80%;
+            max-width: 600px;
+            filter: hue-rotate(9999999deg);
+            animation: flash 0.05s infinite;
+        }
+        .unreachable-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            background-color: magenta;
+            color: black;
+            border: 5px dashed yellow;
+            cursor: pointer;
+            font-size: 80px;
+        }
+        .ice-spice-image {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            animation: float 3s infinite;
+        }
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(300px, 200px) rotate(90deg); }
+            50% { transform: translate(-150px, 400px) rotate(180deg); }
+            75% { transform: translate(400px, -200px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="useless-wrapper">
+            <marquee behavior="alternate" direction="right" scrollamount="500">
+                <img class="actual-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM-eYE-iCAiQoev_7hSWLq-CkgN0vquWEV3Q&s">
+            </marquee>
+        </div>
+        <button class="unreachable-button">OK</button>
+    </div>
+
+    <iframe id="music" src="https://www.youtube.com/embed/px4vCFY7TQ8?autoplay=1" allow="autoplay"></iframe>
+    <iframe id="rickroll" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allow="autoplay"></iframe>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let volume = 0.1;
+            let music = document.getElementById('music');
+
+            function makeButtonRunAway() {
+                let button = document.querySelector('.unreachable-button');
+                button.addEventListener('mouseover', function () {
+                    let newX = Math.random() * (window.innerWidth - 200);
+                    let newY = Math.random() * (window.innerHeight - 200);
+                    button.style.left = `${newX}px`;
+                    button.style.top = `${newY}px`;
+                    button.style.transform = `rotate(${Math.random() * 1440}deg) scale(${Math.random() * 3 + 0.5})`;
+
+                    volume += 0.1;
+                    if (volume > 1) volume = 1;
+                    console.log("Increasing volume:", volume);
+                });
+            }
+
+            function spawnIceSpice() {
+                let container = document.querySelector('.container');
+                let count = 0;
+                let interval = setInterval(() => {
+                    if (count >= 250) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    let img = document.createElement('img');
+                    let sources = [
+                        'https://f4.bcbits.com/img/a3668057859_65',
+                        'https://ca-times.brightspotcdn.com/dims4/default/84a41a1/2147483647/strip/false/crop/3537x3538+0+0/resize/1486x1486!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fe9%2F00%2Fffa43d7d4328b12b013160f21098%2F1345276-et-ice-spice-grammy-envelope-4a.jpg',
+                        'https://ae03.alicdn.com/kf/S182c942db849485ab16df8e9a30de8166.jpg_640x640q90.jpg'
+                    ];
+                    img.src = sources[Math.floor(Math.random() * sources.length)];
+                    img.className = 'ice-spice-image';
+                    img.style.top = `${Math.random() * 100}%`;
+                    img.style.left = `${Math.random() * 100}%`;
+                    container.appendChild(img);
+                    count++;
+                }, 100);
+            }
+
+            function memoryLeak() {
+                let leakyArray = [];
+                let count = 0;
+                let leakInterval = setInterval(() => {
+                    if (count > 10000) {
+                        clearInterval(leakInterval);
+                        return;
+                    }
+                    leakyArray.push(new Array(100000).fill(Math.random()));
+                    count++;
+                }, 10);
+            }
+
+            function openVideoSpam() {
+                setInterval(function () {
+                    let vid1 = window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "_blank", "width=400,height=300");
+                    let vid2 = window.open("https://www.youtube.com/watch?v=oftolPu9qp4", "_blank", "width=400,height=300");
+                    if (vid1) { vid1.blur(); }
+                    if (vid2) { vid2.blur(); }
+                    window.focus();
+                }, 10000);
+            }
+
+            function annoyingAlerts() {
+                setInterval(function () {
+                    alert("WARNING: Your computer is now officially doomed.");
+                    alert("ERROR 404: Sanity Not Found.");
+                    alert("Congratulations! You've won absolutely nothing!");
+                }, 15000);
+            }
+
+            function startChaos() {
+                makeButtonRunAway();
+                spawnIceSpice();
+                memoryLeak();
+            }
+
+            document.body.addEventListener('click', () => {
+                startChaos();
+                console.log("CHAOS!!!");
+            });
+
+            setInterval(() => {
+                document.body.style.backgroundColor = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+            }, 100);
+
+            openVideoSpam();
+            annoyingAlerts();
+        });
+    </script>
+</body>
+</html>
